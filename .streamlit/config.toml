@@ -1,0 +1,15 @@
+[server]
+# Để Streamlit bind đúng port khi chạy trên Hugging Face Spaces
+headless = true
+port = 7860
+enableCORS = false
+enableXsrfProtection = false
+
+[theme]
+# Tuỳ chỉnh theme (nếu muốn)
+base = "light"       # light hoặc dark
+primaryColor = "#4CAF50"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#000000"
+font = "sans serif"

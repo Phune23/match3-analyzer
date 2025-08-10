@@ -1,0 +1,12 @@
+LevelID,GridRows,GridCols,Grid,MoveLimit,BlockTypes,Traps
+1,5,5,"A B C D E
+F G H I J
+K L M N O
+P Q R S T
+U V W X Y",20,"A,B,C,D,E",None
+2,6,6,"A A B B C C
+D D E E F F
+G G H H I I
+J J K K L L
+M M N N O O
+P P Q Q R R",25,"A,B,C,D,E,F",None
