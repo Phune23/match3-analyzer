@@ -232,7 +232,7 @@ streamlit run streamlit_app.py --server.enableCORS false --logger.level debug
 ### Author
 - **Name**: Phune23  
 - **Email**: phutranbs23@gmail.com
-- **LinkedIn**: [Phune23](www.linkedin.com/in/phu-tran-bui-son-03061a315)
+- **LinkedIn**: [Phune23](https://www.linkedin.com/in/phu-tran-bui-son-03061a315)
 
 ### Links
 - **GitHub**: [match3-analyzer](https://github.com/Phune23/match3-analyzer)
