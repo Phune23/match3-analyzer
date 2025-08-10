@@ -48,8 +48,8 @@ Bạn có thể trải nghiệm trực tiếp trên Hugging Face Spaces:
 
 ### 1️⃣ Clone repository
 ```bash
-git clone https://github.com/username/match3-level-analyzer.git
-cd match3-level-analyzer
+git clone https://github.com/Phune23/match3-analyzer.git
+cd match3-analyzer
 ```
 
 ### 2️⃣ Cài đặt dependencies
@@ -165,8 +165,8 @@ DIFFICULTY_WEIGHTS = {
 ### Development setup
 ```bash
 # Clone và setup môi trường dev
-git clone https://github.com/username/match3-level-analyzer.git
-cd match3-level-analyzer
+git clone https://github.com/Phune23/match3-analyzer.git
+cd match3-analyzer
 pip install -r requirements-dev.txt
 pre-commit install
 ```
@@ -232,7 +232,7 @@ streamlit run streamlit_app.py --server.enableCORS false --logger.level debug
 ### Author
 - **Name**: Phune23  
 - **Email**: phutranbs23@gmail.com
-- **LinkedIn**: [Phune23](www.linkedin.com/in/phu-tran-bui-son-03061a315)
+- **LinkedIn**: [Phune23](https://www.linkedin.com/in/phu-tran-bui-son-03061a315)
 
 ### Links
 - **GitHub**: [match3-analyzer](https://github.com/Phune23/match3-analyzer)
