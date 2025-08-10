@@ -174,9 +174,10 @@ A B C D E A",20,5,1,"Reach 5000 points","Adds traps"
 
 st.set_page_config(page_title="Match-3 Level Analyzer", layout="wide")
 
-# ==== CSS: “zoom” nhẹ + tăng line-height để tránh đè chữ ====
+# ==== Global CSS: ổn định viewport & bảng/đồ thị (anti-jitter) ====
 st.markdown("""
 <style>
+/* Cỡ chữ nhẹ + line-height cho bảng */
 html, body, [data-testid="stAppViewContainer"] { font-size: 17px !important; }
 [data-testid="stDataFrame"] div[role="columnheader"],
 [data-testid="stDataFrame"] div[role="gridcell"] {
@@ -186,6 +187,16 @@ html, body, [data-testid="stAppViewContainer"] { font-size: 17px !important; }
   font-size: 0.98rem !important;
 }
 [data-testid="stDataFrame"] div[role="columnheader"] p { white-space: nowrap !important; }
+
+/* ——— Anti-jitter cho toàn trang ——— */
+html, body { scrollbar-gutter: stable both-edges; overflow-y: scroll; } /* giữ chỗ cố định cho scrollbar dọc */
+[data-testid="stAppViewContainer"] { overflow-x: clip; }                 /* chặn overflow ngang toàn cục */
+.block-container { max-width: 1200px; margin: 0 auto; }                 /* khóa bề rộng hợp lý, tránh “chạm ngưỡng” */
+* { transition-property: none !important; }                              /* tránh rung do transition width/left */
+
+/* Wrapper cuộn ngang cục bộ cho bảng */
+.table-wrap { overflow-x: auto; overscroll-behavior: contain; scrollbar-gutter: stable both-edges; }
+.table-wrap [data-testid="stDataFrame"], .table-wrap table { white-space: nowrap; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -252,18 +263,20 @@ if st.session_state["df"] is not None:
         "DifficultyScore": st.column_config.NumberColumn("Difficulty", format="%.2f", width="small"),
     }
 
-    # 👉 dùng data_editor để render mượt và resize cột được
+    # === Ổn định bảng: bọc wrapper & tắt auto-fit container ===
+    st.markdown('<div class="table-wrap">', unsafe_allow_html=True)
     st.data_editor(
         df_display[[
             "LevelID","Rows","Cols","MoveLimit","BlockTypes","Traps",
             "EfficiencyPct","StepsUsed","TotalCleared","DifficultyScore"
         ]],
         hide_index=True,
-        use_container_width=True,
+        use_container_width=False,  # tránh loop co giãn
         height=440,
         column_config=col_config,
-        disabled=True,     # chỉ đọc
+        disabled=True,              # chỉ đọc
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.download_button(
         "⬇️ Download analysis_results.csv",
@@ -272,14 +285,14 @@ if st.session_state["df"] is not None:
         mime="text/csv",
     )
 
-    # Chart
+    # === Biểu đồ: kích thước cố định + không auto-fit container ===
     try:
         xs = df["LevelID"].astype(int).tolist()
         ys = df["DifficultyScore"].tolist()
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(9, 4))  # cố định size để tránh giật
         ax.plot(xs, ys, marker="o")
         ax.set_xlabel("Level"); ax.set_ylabel("Difficulty Score"); ax.set_title("Difficulty by Level")
-        st.pyplot(fig, use_container_width=True)
+        st.pyplot(fig, use_container_width=False)
 
         png_out_path = "/tmp/difficulty_by_level.png"
         fig.savefig(png_out_path, dpi=160, bbox_inches="tight")
@@ -294,6 +307,7 @@ if st.session_state["df"] is not None:
         st.warning("LevelID is not numeric; skipping chart.")
 elif submitted and not st.session_state["csv_bytes"]:
     st.warning("Please upload a CSV or click 'Use sample CSV' before running.")
+
 # --- About & How-to (Tiếng Việt) ---
 with st.expander("ℹ️ Giới thiệu & Hướng dẫn sử dụng"):
     st.markdown("""
